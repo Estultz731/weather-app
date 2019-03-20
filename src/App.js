@@ -2,7 +2,20 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const convertTemp = temp => Math.trunc((temp * 9/5) + 32)
+
 class App extends Component {
+  state = {days: []}
+
+  componentDidMount() {
+  
+    fetch(
+      "https://cors-anywhere.herokuapp.com/www.metaweather.com/api/location/2487956/"
+    ).then(
+      response => response.json().then(weatherData => this.setState({days: weatherData.consolidated_weather})),
+      console.log
+    )
+  }
   render() {
     return (
       <>
@@ -11,48 +24,18 @@ class App extends Component {
         </nav>
         <div className="container">
           <div className="row">
-            <div className="col-sm-12 col-lg-2">
-              <div className="card">
-                <div className="day">Monday</div>
-                <div className="icon"><span className="fas fa-cloud-showers-heavy" /></div>
-                <div className="temp">70 | 53</div>
-              </div>
-            </div>
-            <div className="col-sm-12 col-lg-2">
-              <div className="card">
-                <div className="day">Tuesday</div>
-                <div className="icon"><span className="fas fa-cloud-showers-heavy" /></div>
-                <div className="temp">55 | 40</div>
-              </div>
-            </div>
-            <div className="col-sm-12 col-lg-2">
-              <div className="card">
-                <div className="day">Wednesday</div>
-                <div className="icon"><span className="fas fa-cloud-showers-heavy" /></div>
-                <div className="temp">43 | 28</div>
-              </div>
-            </div>
-            <div className="col-sm-12 col-lg-2">
-              <div className="card">
-                <div className="day">Thursday</div>
-                <div className="icon"><span className="fas fa-cloud-showers-heavy" /></div>
-                <div className="temp">77 | 63</div>
-              </div>
-            </div>
-            <div className="col-sm-12 col-lg-2">
-              <div className="card">
-                <div className="day">Friday</div>
-                <div className="icon"><span className="fas fa-cloud-showers-heavy" /></div>
-                <div className="temp">65 | 50</div>
-              </div>
-            </div>
-            <div className="col-sm-12 col-lg-2">
-              <div className="card">
-                <div className="day">Saturday</div>
-                <div className="icon"><span className="fas fa-cloud-showers-heavy" /></div>
-                <div className="temp">72 | 65</div>
-              </div>
-            </div>
+            
+            {
+              this.state.days.map(day => (
+                <div className="col-sm-12 col-lg-2">
+                  <div className="card">
+                    <div className="day">Monday</div>
+                    <div className="icon"><span className="fas fa-cloud-showers-heavy" /></div>
+                    <div className="temp">{convertTemp(day.max_temp)} | {convertTemp(day.min_temp)}</div>
+                  </div>
+                </div>
+              ))
+            }
           </div>
         </div>
     </>
