@@ -32,7 +32,7 @@ class App extends Component {
 
   componentDidMount() {
     fetch(
-      'https://cors-anywhere.herokuapp.com/www.metaweather.com/api/location/2487956/'
+      'https://cors-anywhere.herokuapp.com/www.metaweather.com/api/location/2442327/'
     ).then(response =>
       response
         .json()
